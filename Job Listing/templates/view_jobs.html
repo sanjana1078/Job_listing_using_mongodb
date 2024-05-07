@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Jobs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .job-listing {
+            margin-bottom: 40px; /* Increase margin to provide space between listings */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+
+        .job-details {
+            font-size: 16px;
+            margin-bottom: 10px; /* Reduce margin between details and buttons */
+        }
+
+        .delete-button,
+        .update-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        .update-button {
+            background-color: #007bff;
+            color: #fff;
+            margin-left: 10px; /* Add margin to separate buttons */
+        }
+
+        .update-button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            opacity: 0; /* Initially hide the buttons */
+            transition: opacity 0.3s ease;
+        }
+
+        .job-listing:hover .button-container {
+            opacity: 1; /* Show the buttons on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Jobs</h1>
+    <div class="container">
+        {% for job in jobs %}
+        <div class="job-listing">
+            <div class="job-details">
+                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Salary:</strong> {{ job.salary }}</p>
+                <p><strong>Location:</strong> {{ job.location }}</p>
+                <p><strong>Company:</strong> {{ job.company }}</p>
+            </div>
+            <div class="button-container">
+                <button class="delete-button" onclick="deleteJob('{{ job._id }}')">Delete</button>
+                <button class="update-button" onclick="location.href='/update_job_page/{{ job._id }}'">Update</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+        function deleteJob(jobId) {
+            if (confirm("Are you sure you want to delete this job?")) {
+                fetch(`/delete_job/${jobId}`, {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    window.location.reload();
+                })
+                .catch(error => console.error('Error deleting job:', error));
+            }
+        }
+    </script>
+</body>
+</html>

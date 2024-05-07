@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* CSS styles for the update job form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional CSS styles for form elements */
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Update Job</h1>
+    <div class="container">
+        <form id="update_job_form" data-job-id="{{ job._id }}">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" class="input-field" value="{{ job.title }}"><br>
+            
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" class="input-field" rows="4">{{ job.description }}</textarea><br>
+            
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" class="input-field" value="{{ job.salary }}"><br>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" class="input-field" value="{{ job.location }}"><br>
+            
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company" class="input-field" value="{{ job.company }}"><br>
+            
+            <button type="button" id="update_job_button">Update Job</button>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateButton = document.getElementById('update_job_button');
+            if (updateButton) {
+                updateButton.addEventListener('click', function() {
+                    const form = document.getElementById('update_job_form');
+                    const formData = new FormData(form);
+                    const jobId = form.getAttribute('data-job-id');
+                    
+                    fetch(`/update_job/${jobId}`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        window.location.href = '/view_jobs';
+                    })
+                    .catch(error => console.error('Error updating job:', error));
+                });
+            }
+        });
+    </script>
+</body>
+</html>

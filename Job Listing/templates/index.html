@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #0077b5;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #005f91;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #0077b5;
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .image-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .image-container {
+            flex: 0 0 30%; /* Adjust the width of each image container */
+            text-align: center;
+        }
+        .image-container img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .image-container h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .job-listing {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+        .job-listing:hover {
+            transform: translateY(-5px);
+        }
+        .job-details {
+            margin-bottom: 20px;
+            flex: 1; /* Take remaining space */
+        }
+        .job-details p {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .job-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+        .job-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .action-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-buttons button.delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .action-buttons button.update-button {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .action-buttons button:hover {
+            filter: brightness(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Job Listings</h1>
+        <nav>
+            <a href="{{ url_for('add_job_page') }}">Add Job</a>
+            <a href="{{ url_for('view_jobs') }}">View Jobs</a>
+        </nav>
+    </header>
+    <main>
+        <!-- First Image Section -->
+        <section class="image-section">
+            <div class="image-container">
+                <img src="https://www.iimtindia.net/Blog/wp-content/uploads/2021/06/Data-Science.jpg" alt="Data Scientist">
+                <h2>Data Scientist</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://fthmb.tqn.com/XR3dQI5b2v1777oLVjvokA9ADlE=/1678x1119/filters:fill(auto,1)/doctor-56a0f0603df78cafdaa6960f.jpg" alt="Neuro sergeon">
+                <h2>Neuro sergeon</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://infoguidenigeria.com/wp-content/uploads/2022/10/Electrical-engineer.jpg" alt="Electrical Engineer">
+                <h2>Electrical Enginee</h2>
+            </div>
+        </section>
+        <!-- End First Image Section -->
+
+        <!-- Second Image Section -->
+        <section class="image-section">
+            <div class="image-container">
+                <img src="https://resources.workable.com/wp-content/uploads/2019/11/engineering-1.jpg" alt="Data Scientist">
+                <h2>Mechanical Engineer</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://www.ziprecruiter.com/blog/static/wp-content/uploads/2017/06/28155623/1071652068_Software-Developer.jpg" alt="Neuro sergeon">
+                <h2>Software developer</h2>
+            </div>
+            <div class="image-container">
+                <img src="https://www.villanovau.com/wp-content/uploads/2013/12/Business-Analyst-Job-Description.jpg" alt="Electrical Engineer">
+                <h2>Business analyst</h2>
+            </div>
+        </section>
+        <!-- End Second Image Section -->
+
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Job</h1>
+    <div class="container">
+        <form id="add_job_form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" class="input-field"><br><br>
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" class="input-field"></textarea><br><br>
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" class="input-field"><br><br>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" class="input-field"><br><br>
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company" class="input-field"><br><br>
+            <button type="button" id="add_job_button" class="action-button">Add Job</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addButton = document.getElementById('add_job_button');
+            if (addButton) {
+                addButton.addEventListener('click', function() {
+                    const form = document.getElementById('add_job_form');
+                    const formData = new FormData(form);
+                    
+                    fetch('/add_job', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            alert(data.message); // Assuming your server sends a message upon successful addition
+                            form.reset();
+                        } else {
+                            alert('Failed to add job. Please try again.');
+                        }
+                    })
+                    .catch(error => console.error('Error adding job:', error));
+                });
+            }
+        });
+    </script>
+</body>
+</html>
